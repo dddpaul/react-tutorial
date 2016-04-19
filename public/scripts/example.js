@@ -10,6 +10,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import React from "react";
+import ReactDOM from "react-dom";
+
 const Comment = React.createClass({
   rawMarkup() {
     const rawMarkup = marked(this.props.children.toString(), {sanitize: true});
