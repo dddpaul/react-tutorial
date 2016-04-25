@@ -14,11 +14,11 @@ import React from "react";
 import update from "react/lib/update";
 import ReactDOM from "react-dom";
 
-const Comment = React.createClass({
+class Comment extends React.Component {
   rawMarkup() {
     const rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return {__html: rawMarkup};
-  },
+  }
 
   render() {
     return (
@@ -30,9 +30,9 @@ const Comment = React.createClass({
       </div>
     );
   }
-});
+}
 
-const CommentBox = React.createClass({
+class CommentBox extends React.Component {
   loadCommentsFromServer() {
     $.ajax({
       url: this.props.url,
@@ -45,7 +45,7 @@ const CommentBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  },
+  }
 
   handleCommentSubmit(comment) {
     const comments = this.state.data;
@@ -68,16 +68,16 @@ const CommentBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  },
+  }
 
   getInitialState() {
     return {data: []};
-  },
+  }
 
   componentDidMount() {
     this.loadCommentsFromServer();
     setInterval(this.loadCommentsFromServer, this.props.pollInterval);
-  },
+  }
 
   render() {
     return (
@@ -88,9 +88,9 @@ const CommentBox = React.createClass({
       </div>
     );
   }
-});
+}
 
-const CommentList = React.createClass({
+class CommentList extends React.Component {
   render() {
     const commentNodes = this.props.data.map(function (comment) {
       return (
@@ -105,20 +105,20 @@ const CommentList = React.createClass({
       </div>
     );
   }
-});
+}
 
-const CommentForm = React.createClass({
+class CommentForm extends React.Component {
   getInitialState() {
     return {author: '', text: ''};
-  },
+  }
 
   handleAuthorChange(e) {
     this.setState({author: e.target.value});
-  },
+  }
 
   handleTextChange(e) {
     this.setState({text: e.target.value});
-  },
+  }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -129,7 +129,7 @@ const CommentForm = React.createClass({
     }
     this.props.onCommentSubmit({author: author, text: text});
     this.setState({author: '', text: ''});
-  },
+  }
 
   render() {
     return (
@@ -150,7 +150,7 @@ const CommentForm = React.createClass({
       </form>
     );
   }
-});
+}
 
 ReactDOM.render(
   <CommentBox url="/api/comments" pollInterval={2000}/>,
